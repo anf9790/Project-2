@@ -4,10 +4,6 @@ body {
     background-repeat: no-repeat;
     background-position: center;
     background-color: #2C0B0D;
-
-    color: #FFFFFF;
-    font-weight: bold;
-    font-family: 'Courier New', Courier, monospace;
 }
 
 .mainForm {
@@ -28,4 +24,38 @@ body {
     margin-right: 15px;
     text-align: right;
     font-size: 1.2em;
+}
+
+/* How the error messages appear when logging in. */
+#NFTMessage {
+    display:none;
+    top: 55px;
+    left: 3%;
+    width: 300px;
+    height: 650px;
+    position: absolute;
+    z-index: 200;
+    right: 0px;
+    overflow: hidden;
+}
+
+#NFTMessage h3 {
+    width: 260px;
+    position: absolute;
+    top: 2px;
+    left: 20px;
+}
+
+#speech {
+    height: 220px;
+    width: 300px;
+    z-index:300;
+    right: 30px;
+}
+
+#errorMessage {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: red;
+    font-style: italic;
 }

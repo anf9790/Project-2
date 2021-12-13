@@ -4,7 +4,7 @@ const handleLogin = (e) => {
     $("#NFTMessage").animate({width:'hide'},350);
 
     if($("#user").val()== ''|| $("#pass").val()==''){
-        handleError("RAWR! Username or password is empty");
+        handleError("Hey you didn't input anything, bub.");
         return false;
     }
 
@@ -21,12 +21,12 @@ const handleSignup = (e) => {
     $("#NFTMessage").animate({width:'hide'},350);
 
     if($("#user").val()== ''|| $("#pass").val()==''|| $("#pass2").val()==''){
-        handleError("RAWR! All fields are required");
+        handleError("I think you forgot something, bub.");
         return false;
     }
 
     if($("#pass").val()!== $("#pass2").val()){
-        handleError("RAWR! Passwords do not match");
+        handleError("Those passwords don\'t match, bub. Are you one of those \"write-clickers\"");
         return false;
     }
 

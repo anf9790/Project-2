@@ -13,10 +13,6 @@ const makerPage = (req, res) => {
 };
 
 const makeNFT = (req, res) => {
-  if (!req.body.color || !req.body.idNum || !req.body.value) {
-    return res.status(400).json({ error: 'RAWR! Color, idNum and value are required' });
-  }
-
   const NFTData = {
     color: req.body.color,
     idNum: req.body.idNum,
@@ -33,10 +29,10 @@ const makeNFT = (req, res) => {
   NFTPromise.catch((err) => {
     console.log(err);
     if (err.code === 11000) {
-      return res.status(400).json({ error: 'NFT already exists.' });
+      return res.status(400).json({ error: 'An NFT like that already exists...' });
     }
 
-    return res.status(400).json({ error: 'An error occurred' });
+    return res.status(400).json({ error: 'An error occurred, bub.' });
   });
 
   return NFTPromise;
@@ -49,7 +45,7 @@ const getNFTs = (request, response) => {
   return NFT.NFTModel.findByOwner(req.session.account._id, (err, docs) => {
     if (err) {
       console.log(err);
-      return res.status(400).json({ error: 'An error occurred' });
+      return res.status(400).json({ error: 'Some sort of error occurred, bub.' });
     }
 
     return res.json({ NFTs: docs });
@@ -65,7 +61,7 @@ const deleteNFT = (request, response) => {
   return NFT.NFTModel.removeNFT(req.body.NFTId, (err, docs) => {
     if (err) {
       console.log(err);
-      return res.status(400).json({ error: 'An error occured' });
+      return res.status(400).json({ error: 'Some sort of error occurred, bub.' });
     }
     return res.json({ redirect: '/maker' });
   });

@@ -20,12 +20,12 @@ const login = (request, response) => {
   const password = `${req.body.pass}`;
 
   if (!username || !password) {
-    return res.status(400).json({ error: 'RAWR! All fields are required!' });
+    return res.status(400).json({ error: 'Hey bub, all the fields are required.' });
   }
 
   return Account.AccountModel.authenticate(username, password, (err, account) => {
     if (err || !account) {
-      return res.status(401).json({ error: 'Wrong username or password!' });
+      return res.status(401).json({ error: 'That\'s the wrong username and/or password, bub. I can\'t let you in.' });
     }
 
     req.session.account = Account.AccountModel.toAPI(account);
@@ -44,11 +44,11 @@ const signup = (request, response) => {
   req.body.pass2 = `${req.body.pass2}`;
 
   if (!req.body.username || !req.body.pass || !req.body.pass2) {
-    return res.status(400).json({ error: 'RAWR! All fields are required!' });
+    return res.status(400).json({ error: 'Hey bub, all the fields are required.' });
   }
 
   if (req.body.pass !== req.body.pass2) {
-    return res.status(400).json({ error: 'RAWR! Passwords do not match!' });
+    return res.status(400).json({ error: 'Those passwords don\'t match, bub. Are you one of those \"write-clickers\"' });
   }
 
   return Account.AccountModel.generateHash(req.body.pass, (salt, hash) => {
@@ -71,10 +71,10 @@ const signup = (request, response) => {
       console.log(err);
 
       if (err.code === 11000) {
-        return res.status(400).json({ error: 'Username already in use!' });
+        return res.status(400).json({ error: 'Some already has that username, bub, and clearly you ain\'t them.' });
       }
 
-      return res.status(400).json({ error: 'An error occurred!' });
+      return res.status(400).json({ error: 'Some sort of error occurred, bub.' });
     });
   });
 };

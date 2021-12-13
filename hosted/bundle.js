@@ -110,6 +110,7 @@ $(document).ready(function () {
 });
 "use strict";
 "use strict";
+"use strict";
 
 var handleError = function handleError(message) {
   $("#errorMessage").text(message);

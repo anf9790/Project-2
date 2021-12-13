@@ -58,6 +58,7 @@ body {
     border-radius: 4px;
     margin: 0 auto;
     margin-top: 100px;
+    margin-left: 40%;
 }
 
 .NFT {
@@ -69,7 +70,7 @@ body {
     border-radius: 4px;
     background-color: #5D3713;
     padding: 10px;
-    min-height:60px;
+    min-height:40%;
     overflow: hidden;
 }
 
@@ -122,4 +123,37 @@ h3.NFTvalue {
 
 .NFT:last-child {
     margin-bottom:10px;
+}
+
+/* How the error messages appear when in the app. */
+#NFTMessage {
+    display:none;
+    top: 250px;
+    width: 300px;
+    height: 650px;
+    position: absolute;
+    z-index: 200;
+    right: 0px;
+    overflow: hidden;
+}
+
+#NFTMessage h3 {
+    width: 260px;
+    position: absolute;
+    top: 2px;
+    left: 20px;
+}
+
+#speech {
+    height: 220px;
+    width: 300px;
+    z-index:300;
+    right: 30px
+}
+
+#errorMessage {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: red;
+    font-style: italic;
 }
