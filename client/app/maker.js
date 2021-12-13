@@ -1,13 +1,13 @@
-
 const handleNFT = (e) => {
     e.preventDefault ();
 
     $("#NFTMessage").animate({width:'hide'},350);
 
-    if($("#NFTName").val() == '' || $("#NFTAge").val()== '' || $("#NFTness").val()== '') {
+    /*
+    if($("#NFTColor").val() == '' || $("#NFTidNum").val()== '' || $("#value").val()== '') {
         handleError("RAWR! All fields are required");
         return false;
-    }
+    }*/
 
     sendAjax('POST', $("#NFTForm").attr("action"), $("#NFTForm").serialize(), function(){
         loadNFTsFromServer();
@@ -32,14 +32,8 @@ const NFTForm = (props) => {
         method="POST"
         className="NFTForm"
         >
-            <label htmlFor="name">Name: </label>
-            <input id="NFTName" type="text" name="name" placeholder="NFT Name"/>
-            <label htmlFor="age">Age: </label>
-            <input id="NFTAge" type="text" name="age" placeholder="NFT Age"/>
-            <label htmlFor="NFTness">NFTness: </label>
-            <input id="NFTness" type="text" name="NFTness" placeholder="NFT ness"/>
             <input id="tokenInput" type="hidden" name="_csrf" value={props.csrf}/>
-            <input className="makeNFTSubmit" type="submit" value="Make NFT"/>
+            <input className="makeNFTSubmit" type="submit" value="Next NFT"/>
             
         </form>
     )
@@ -60,9 +54,8 @@ const NFTList = function(props) {
             className="NFT"
             >
                 <img src="/assets/img/toad.png" alt="NFT image" className="NFTFace"/>
-                <h3 className="NFTName"> Name: {NFT.name} </h3>
-                <h3 className="NFTAge"> Age: {NFT.age} </h3>
-                <h3 className="NFTness"> NFTness: {NFT.ness} </h3>
+                <h3 className="NFTidNum"> idNum: {NFT.idNum} </h3>
+                <h3 className="value"> Value: {NFT.value} Crypto-Bucks</h3>
                 <input className="NFTRelease" type="submit" value="Release" onClick={()=>handleDelete(NFT)}/>
             </div>
         )

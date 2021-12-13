@@ -1,0 +1,31 @@
+body {
+    background-image: url("img/login.png");
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #2C0B0D;
+
+    color: #FFFFFF;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.mainForm {
+    height: 300px;
+    width: 350px;
+    margin: 0 auto;
+    padding-top: 350px;
+    font-size: 1.2em;
+}
+
+.mainForm h3 {
+    text-align: center;
+}
+
+.mainForm label {
+    display: inline-block;
+    width: 100px;
+    margin-right: 15px;
+    text-align: right;
+    font-size: 1.2em;
+}

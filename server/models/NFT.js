@@ -8,23 +8,23 @@ let NFTModel = {};
 // mongoose.Types.ObjectID is a function that
 //  converts string ID's to real mongo ID's.
 const convertId = mongoose.Types.ObjectId;
-const setName = (name) => _.escape(name).trim();
+const setColor = (color) => _.escape(color).trim();
 
 const NFTSchema = new mongoose.Schema({
-  name: {
+  color: {
     type: String,
     required: true,
     trim: true,
-    set: setName,
+    set: setColor,
   },
 
-  age: {
+  idNum: {
     type: Number,
-    min: 0,
+    min: 1,
     required: true,
   },
 
-  NFTness: {
+  value: {
     type: Number,
     min: 1,
     required: true,
@@ -43,9 +43,9 @@ const NFTSchema = new mongoose.Schema({
 });
 
 NFTSchema.statics.toAPI = (doc) => ({
-  name: doc.name,
-  age: doc.age,
-  NFTness: doc.NFTness,
+  color: doc.color,
+  idNum: doc.idNum,
+  value: doc.value,
 });
 
 NFTSchema.statics.findByOwner = (ownerId, callback) => {
@@ -53,7 +53,7 @@ NFTSchema.statics.findByOwner = (ownerId, callback) => {
     owner: convertId(ownerId),
   };
 
-  return NFTModel.find(search).select('name age NFTness').lean().exec(callback);
+  return NFTModel.find(search).select('color idNum value').lean().exec(callback);
 };
 
 NFTSchema.statics.removeNFT = (NFTId, callback) => {

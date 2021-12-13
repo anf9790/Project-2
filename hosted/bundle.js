@@ -5,11 +5,11 @@ var handleNFT = function handleNFT(e) {
   $("#NFTMessage").animate({
     width: 'hide'
   }, 350);
-
-  if ($("#NFTName").val() == '' || $("#NFTAge").val() == '' || $("#NFTness").val() == '') {
-    handleError("RAWR! All fields are required");
-    return false;
-  }
+  /*
+  if($("#NFTColor").val() == '' || $("#NFTidNum").val()== '' || $("#value").val()== '') {
+      handleError("RAWR! All fields are required");
+      return false;
+  }*/
 
   sendAjax('POST', $("#NFTForm").attr("action"), $("#NFTForm").serialize(), function () {
     loadNFTsFromServer();
@@ -34,28 +34,7 @@ var NFTForm = function NFTForm(props) {
     action: "/maker",
     method: "POST",
     className: "NFTForm"
-  }, /*#__PURE__*/React.createElement("label", {
-    htmlFor: "name"
-  }, "Name: "), /*#__PURE__*/React.createElement("input", {
-    id: "NFTName",
-    type: "text",
-    name: "name",
-    placeholder: "NFT Name"
-  }), /*#__PURE__*/React.createElement("label", {
-    htmlFor: "age"
-  }, "Age: "), /*#__PURE__*/React.createElement("input", {
-    id: "NFTAge",
-    type: "text",
-    name: "age",
-    placeholder: "NFT Age"
-  }), /*#__PURE__*/React.createElement("label", {
-    htmlFor: "NFTness"
-  }, "NFTness: "), /*#__PURE__*/React.createElement("input", {
-    id: "NFTness",
-    type: "text",
-    name: "NFTness",
-    placeholder: "NFT ness"
-  }), /*#__PURE__*/React.createElement("input", {
+  }, /*#__PURE__*/React.createElement("input", {
     id: "tokenInput",
     type: "hidden",
     name: "_csrf",
@@ -63,7 +42,7 @@ var NFTForm = function NFTForm(props) {
   }), /*#__PURE__*/React.createElement("input", {
     className: "makeNFTSubmit",
     type: "submit",
-    value: "Make NFT"
+    value: "Next NFT"
   }));
 };
 
@@ -85,12 +64,10 @@ var NFTList = function NFTList(props) {
       alt: "NFT image",
       className: "NFTFace"
     }), /*#__PURE__*/React.createElement("h3", {
-      className: "NFTName"
-    }, " Name: ", NFT.name, " "), /*#__PURE__*/React.createElement("h3", {
-      className: "NFTAge"
-    }, " Age: ", NFT.age, " "), /*#__PURE__*/React.createElement("h3", {
-      className: "NFTness"
-    }, " NFTness: ", NFT.ness, " "), /*#__PURE__*/React.createElement("input", {
+      className: "NFTidNum"
+    }, " idNum: ", NFT.idNum, " "), /*#__PURE__*/React.createElement("h3", {
+      className: "value"
+    }, " Value: ", NFT.value, " Crypto-Bucks"), /*#__PURE__*/React.createElement("input", {
       className: "NFTRelease",
       type: "submit",
       value: "Release",
@@ -131,6 +108,7 @@ var getToken = function getToken() {
 $(document).ready(function () {
   getToken();
 });
+"use strict";
 "use strict";
 
 var handleError = function handleError(message) {

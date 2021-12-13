@@ -13,14 +13,14 @@ const makerPage = (req, res) => {
 };
 
 const makeNFT = (req, res) => {
-  if (!req.body.name || !req.body.age || !req.body.NFTness) {
-    return res.status(400).json({ error: 'RAWR! Name, age and NFTness are required' });
+  if (!req.body.color || !req.body.idNum || !req.body.value) {
+    return res.status(400).json({ error: 'RAWR! Color, idNum and value are required' });
   }
 
   const NFTData = {
-    name: req.body.name,
-    age: req.body.age,
-    NFTness: req.body.NFTness,
+    color: req.body.color,
+    idNum: req.body.idNum,
+    value: req.body.value,
     owner: req.session.account._id,
   };
 
