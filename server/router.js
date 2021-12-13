@@ -9,6 +9,9 @@ const router = (app) => {
   app.post('/signup', mid.requiresSecure, mid.requiresLogout, controllers.Account.signup);
   app.delete('/delete-NFT', mid.requiresLogin, controllers.NFT.deleteNFT);
   app.get('/logout', mid.requiresLogin, controllers.Account.logout);
+  app.get('/info', mid.requiresLogin, controllers.Account.infoPage);
+  //app.post('/info', mid.requiresLogin, controllers.Account.updateInfoPage);
+  app.get('/collection', mid.requiresLogin, controllers.Account.collectionPage);
   app.get('/maker', mid.requiresLogin, controllers.NFT.makerPage);
   app.post('/maker', mid.requiresLogin, controllers.NFT.make);
   app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);

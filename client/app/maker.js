@@ -9,6 +9,7 @@ const handleNFT = (e) => {
         return false;
     }*/
 
+
     sendAjax('POST', $("#NFTForm").attr("action"), $("#NFTForm").serialize(), function(){
         loadNFTsFromServer();
     });
@@ -74,6 +75,55 @@ const loadNFTsFromServer =()=>{
             <NFTList NFTs={data.NFTs} />, document.querySelector("#NFTs")
         )
     })
+}
+
+const CollectionWindow = (props) => {
+    return (
+        <div id="wrapper">
+            <div id="upgrades">
+                <div className="upgrade">
+                    <p>More seeds</p>
+                    <input type="button" value="x 5" />
+                </div>
+                <div className="upgrade">
+                    <p>Flower grow speed</p>
+                    <input type="button" value="x 2" />
+                </div>
+            </div>
+        </div>
+    );
+}
+
+const createCollectionWindow = (csrf) => {
+    ReactDOM.render(
+        <CollectionWindow csrf={csrf} />,
+        document.querySelector("#content")
+    );
+}
+
+/** User Info Page **/
+const InfoWindow = (props) => {
+    return (
+        <div id="wrapper">
+            <div id="upgrades">
+                <div className="upgrade">
+                    <p>More seeds</p>
+                    <input type="button" value="x 5" />
+                </div>
+                <div className="upgrade">
+                    <p>Flower grow speed</p>
+                    <input type="button" value="x 2" />
+                </div>
+            </div>
+        </div>
+    );
+}
+
+const createInfoWindow = (csrf) => {
+    ReactDOM.render(
+        <InfoWindow csrf={csrf} />,
+        document.querySelector("#content")
+    );
 }
 
 const setup = function(csrf){

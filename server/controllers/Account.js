@@ -34,6 +34,14 @@ const login = (request, response) => {
   });
 };
 
+const collectionPage = (req, res) => {
+  res.render('collection', { csrfToken: req.csrfToken() });
+};
+
+const infoPage = (req, res) => {
+  res.render('collection', { csrfToken: req.csrfToken() });
+};
+
 const signup = (request, response) => {
   const req = request;
   const res = response;
@@ -95,3 +103,5 @@ module.exports.login = login;
 module.exports.logout = logout;
 module.exports.signup = signup;
 module.exports.getToken = getToken;
+module.exports.collectionPage = collectionPage;
+module.exports.infoPage = infoPage;

@@ -89,6 +89,56 @@ var loadNFTsFromServer = function loadNFTsFromServer() {
   });
 };
 
+var CollectionWindow = function CollectionWindow(props) {
+  return /*#__PURE__*/React.createElement("div", {
+    id: "wrapper"
+  }, /*#__PURE__*/React.createElement("div", {
+    id: "upgrades"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "upgrade"
+  }, /*#__PURE__*/React.createElement("p", null, "More seeds"), /*#__PURE__*/React.createElement("input", {
+    type: "button",
+    value: "x 5"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "upgrade"
+  }, /*#__PURE__*/React.createElement("p", null, "Flower grow speed"), /*#__PURE__*/React.createElement("input", {
+    type: "button",
+    value: "x 2"
+  }))));
+};
+
+var createCollectionWindow = function createCollectionWindow(csrf) {
+  ReactDOM.render( /*#__PURE__*/React.createElement(CollectionWindow, {
+    csrf: csrf
+  }), document.querySelector("#content"));
+};
+/** User Info Page **/
+
+
+var InfoWindow = function InfoWindow(props) {
+  return /*#__PURE__*/React.createElement("div", {
+    id: "wrapper"
+  }, /*#__PURE__*/React.createElement("div", {
+    id: "upgrades"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "upgrade"
+  }, /*#__PURE__*/React.createElement("p", null, "More seeds"), /*#__PURE__*/React.createElement("input", {
+    type: "button",
+    value: "x 5"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "upgrade"
+  }, /*#__PURE__*/React.createElement("p", null, "Flower grow speed"), /*#__PURE__*/React.createElement("input", {
+    type: "button",
+    value: "x 2"
+  }))));
+};
+
+var createInfoWindow = function createInfoWindow(csrf) {
+  ReactDOM.render( /*#__PURE__*/React.createElement(InfoWindow, {
+    csrf: csrf
+  }), document.querySelector("#content"));
+};
+
 var setup = function setup(csrf) {
   ReactDOM.render( /*#__PURE__*/React.createElement(NFTForm, {
     csrf: csrf
@@ -108,8 +158,6 @@ var getToken = function getToken() {
 $(document).ready(function () {
   getToken();
 });
-"use strict";
-"use strict";
 "use strict";
 
 var handleError = function handleError(message) {
