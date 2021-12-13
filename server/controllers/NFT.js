@@ -13,10 +13,14 @@ const makerPage = (req, res) => {
 };
 
 const makeNFT = (req, res) => {
+  const color = "#" + Math.floor(Math.random()*16777215).toString(16);
+  const idNum = Math.floor(Math.random()*1000000);
+  const value = Math.round(((Math.random()*10) + Number.EPSILON) * 100) / 100;
+
   const NFTData = {
-    color: req.body.color,
-    idNum: req.body.idNum,
-    value: req.body.value,
+    color: color,
+    idNum: idNum,
+    value: value,
     owner: req.session.account._id,
   };
 
@@ -32,7 +36,7 @@ const makeNFT = (req, res) => {
       return res.status(400).json({ error: 'An NFT like that already exists...' });
     }
 
-    return res.status(400).json({ error: 'An error occurred, bub.' });
+    return res.status(400).json({ error: 'Woah, slow down there bub, gimme a sec.' });
   });
 
   return NFTPromise;
@@ -67,7 +71,9 @@ const deleteNFT = (request, response) => {
   });
 };
 
+
 module.exports.makerPage = makerPage;
 module.exports.getNFTs = getNFTs;
 module.exports.deleteNFT = deleteNFT;
 module.exports.make = makeNFT;
+module.exports.collection = getNFTs;

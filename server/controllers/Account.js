@@ -64,6 +64,11 @@ const signup = (request, response) => {
       username: req.body.username,
       salt,
       password: hash,
+      name: '',
+      email: '',
+      address: '',
+      credit: '',
+      code: '',
     };
 
     const newAccount = new Account.AccountModel(accountData);
@@ -87,6 +92,51 @@ const signup = (request, response) => {
   });
 };
 
+const update = (request, response) => {
+  e.preventDefault();
+
+  $("#NFTmessage").animate({ width: 'hide' }, 350);
+
+  
+  // If name is filled out...
+  if (!$("#name").val() == '') {
+    sendAjax($("#nameChangeForm").attr("action"), $("#nameChangeForm").serialize());
+  }
+
+  // If email is filled out...
+  if (!$("#email").val() == '') {
+    sendAjax($("#emailChangeForm").attr("action"), $("#emailChangeForm").serialize());
+  }
+
+  // If address is filled out...
+  if (!$("#address").val() == '') {
+    sendAjax($("#nameChangeForm").attr("action"), $("#addressChangeForm").serialize());
+  }
+
+  // If credit card is filled out...
+  if (!$("#card").val() == '' || !$("#code").val() == '') {
+    sendAjax($("#cardChangeForm").attr("action"), $("#cardChangeForm").serialize());
+    sendAjax($("#codeChangeForm").attr("action"), $("#codeChangeForm").serialize());
+  }
+
+  // If password is filled out...
+  if (!$("#pass").val() == '' && !$("#pass2").val() == '') {
+    if ($("#pass").val() == $("#pass2").val()) {
+      sendAjax($("#passwordChangeForm").attr("action"), $("#passwordChangeForm").serialize());
+    }
+    else {
+      handleError("Those aren't the same password, bub.");
+      return false;
+    }
+  }
+  else {
+    handleError("You need both, bub.");
+      return false;
+  }
+
+  return false;
+};
+
 const getToken = (request, response) => {
   const req = request;
   const res = response;
@@ -105,3 +155,4 @@ module.exports.signup = signup;
 module.exports.getToken = getToken;
 module.exports.collectionPage = collectionPage;
 module.exports.infoPage = infoPage;
+module.exports.update = update;

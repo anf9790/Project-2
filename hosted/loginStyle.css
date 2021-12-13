@@ -26,6 +26,20 @@ body {
     font-size: 1.2em;
 }
 
+h1 {
+    font-size: larger;
+    font-weight: bold;
+    font-size: 2em;
+    margin: 0;
+    text-align: center;
+}
+
+h2 {
+    font-size: 1em;
+    font-style: italic;
+    text-align: center;
+}
+
 /* How the error messages appear when logging in. */
 #NFTMessage {
     display:none;
@@ -49,8 +63,8 @@ body {
 #speech {
     height: 220px;
     width: 300px;
-    z-index:300;
-    right: 30px;
+    right: 40px;
+    z-index: -100;
 }
 
 #errorMessage {

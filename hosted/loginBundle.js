@@ -44,7 +44,7 @@ var LoginWindow = function LoginWindow(props) {
     action: "/login",
     method: "POST",
     className: "mainForm"
-  }, /*#__PURE__*/React.createElement("label", {
+  }, /*#__PURE__*/React.createElement("h1", null, "NFT'S NFTS"), /*#__PURE__*/React.createElement("h2", null, "(Nice Fungi Toadstool's Neat Fricken Toads)"), /*#__PURE__*/React.createElement("label", {
     htmlFor: "username"
   }, "Username: "), /*#__PURE__*/React.createElement("input", {
     id: "user",
@@ -77,7 +77,7 @@ var SignupWindow = function SignupWindow(props) {
     action: "/signup",
     method: "POST",
     className: "mainForm"
-  }, /*#__PURE__*/React.createElement("label", {
+  }, /*#__PURE__*/React.createElement("h1", null, "NFT'S NFTS"), /*#__PURE__*/React.createElement("h2", null, "(Nice Fungi Toadstool's Neat Fricken Toads)"), /*#__PURE__*/React.createElement("label", {
     htmlFor: "username"
   }, "Username: "), /*#__PURE__*/React.createElement("input", {
     id: "user",
@@ -153,6 +153,10 @@ var handleError = function handleError(message) {
   $("#NFTMessage").animate({
     width: 'toggle'
   }, 350);
+};
+
+var handleText = function handleText(message) {
+  $("#errorMessage").text(message);
 };
 
 var redirect = function redirect(response) {

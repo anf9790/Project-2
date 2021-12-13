@@ -3,6 +3,10 @@ const handleError = (message) => {
     $("#NFTMessage").animate({width:'toggle'},350);
 };
 
+const handleText = (message) => {
+    $("#errorMessage").text(message);
+};
+
 const redirect = (response) => {
     $("NFTMessage").animate({width:'hide'},350);
     window.location = response.redirect;

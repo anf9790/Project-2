@@ -24,6 +24,26 @@ const AccountSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  name: {
+    type: String,
+  },
+  email: {
+    type: String,
+    unique: true,
+  },
+  address: {
+    type: String,
+  },
+  credit: {
+    type: String,
+  },
+  code: {
+    type: String,
+  },
+  money: {
+    type: Number,
+    min: 0,
+  },
   createdDate: {
     type: Date,
     default: Date.now,

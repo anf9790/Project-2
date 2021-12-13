@@ -3,7 +3,8 @@ html, body {
     width: 100%;
     margin: 0;
     padding: 0;
-    overflow-x: hidden;
+    width:100%;
+    overflow-x:hidden;
     
     color: #FFFFFF;
     font-weight: bold;
@@ -86,4 +87,11 @@ nav:nth-child(1) {
 #user:focus, #pass:focus, #pass2:focus {
     outline: none;
     box-shadow: 0px 0px 1px 1px #5D3713;
+}
+
+#mush {
+    position: absolute;
+    margin-left: 70%;
+    margin-top: 200px;
+    z-index: -100;
 }
