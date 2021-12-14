@@ -52,7 +52,7 @@ body {
 }
 
 #NFTs {
-    width: 50%;
+    width: 55%;
     min-width: 400px;
     border: 2px solid #5D3713;
     border-radius: 4px;
@@ -96,6 +96,7 @@ h3.emptyNFT {
     margin: 0 auto;
     text-align: center;
     margin-top: 18px;
+    background-color: #5d3113ea;
 }
 
 h3.NFTidNum {
@@ -122,6 +123,15 @@ h3.NFTvalue {
 
 .NFT:last-child {
     margin-bottom:10px;
+}
+
+.NFTButt {
+    margin: 30px;
+    width: 60px;
+    height: 30px;
+    background-color: #4b2215;
+    border-radius: 2px;
+    color: #ffffff
 }
 
 /* How the error messages appear when in the app. */
@@ -155,4 +165,26 @@ h3.NFTvalue {
     font-weight: bold;
     color: red;
     font-style: italic;
+}
+
+.accountForm {
+    display: flex;
+    flex-direction: column;
+    background-color: #5d3113ea;
+}
+
+#passDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin: 20px;
+    font-size: 1.1em;
+}
+
+#passDiv label {
+    margin: 10px;
+}
+
+#passDiv input{
+    border-radius: 10px;
 }

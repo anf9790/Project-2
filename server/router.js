@@ -11,8 +11,13 @@ const router = (app) => {
   app.get('/logout', mid.requiresLogin, controllers.Account.logout);
   app.get('/maker', mid.requiresLogin, controllers.NFT.makerPage);
   app.post('/maker', mid.requiresLogin, controllers.NFT.make);
-  //
-  app.post('/passChange', mid.requiresLogin, controllers.Account.changePassword);
+  app.post('/nameChange', mid.requiresLogin, controllers.Account.changeName);
+  app.post('/passChange', mid.requiresSecure, controllers.Account.changePassword);
+  app.get('/emailChange', mid.requiresLogin, controllers.Account.changeEmail);
+  app.get('/addressChange', mid.requiresLogin, controllers.Account.changeAddress);
+  app.get('/cardChange', mid.requiresLogin, controllers.Account.changeCard);
+  app.get('/codeChange', mid.requiresLogin, controllers.Account.changeCode);
+  app.get('/moneyChange', mid.requiresLogin, controllers.Account.changeMoney);
   app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
 };
 

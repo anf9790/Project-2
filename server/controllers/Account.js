@@ -1,3 +1,4 @@
+const req = require('express/lib/request');
 const models = require('../models');
 
 const { Account } = models;
@@ -14,10 +15,8 @@ const logout = (req, res) => {
 const login = (request, response) => {
   const req = request;
   const res = response;
-
-  // cast to strings to cover up some security flaws
-  username = `${req.body.username}`;
-  password = `${req.body.pass}`;
+  const username = `${req.body.username}`;
+  const password = `${req.body.pass}`;
 
   if (!username || !password) {
     return res.status(400).json({ error: 'All fields are required, bub' });
@@ -56,12 +55,12 @@ const signup = (request, response) => {
       username: req.body.username,
       salt,
       password: hash,
-      name: '',
-      email: '',
-      address: '',
-      credit: '',
-      code: '',
-      money: 0,
+      name: req.body.name,
+      email: req.body.email,
+      address: req.body.address,
+      credit: req.body.credit,
+      code: req.body.code,
+      money: req.body.money,
     };
 
     const newAccount = new Account.AccountModel(accountData);
@@ -89,7 +88,7 @@ const signup = (request, response) => {
 const changePassword = (request, response) => {
   const req = request;
   const res = response;
-  // Cast to strings to cover up some security flaws
+
   req.body.pass = `${req.body.pass}`;
   req.body.pass2 = `${req.body.pass2}`;
 
@@ -114,21 +113,174 @@ const changePassword = (request, response) => {
           username: req.session.account.username,
           salt,
           password: hash,
-          name: '',
-          email: '',
-          address: '',
-          credit: '',
-          code: '',
-          money: 0,
         };
 
         return Account.AccountModel.replacePass(accountData, (errr, docs) => {
           if (errr) {
-            console.log(err);
+            console.log(errr);
             return res.status(400).json({ error: 'Something went wrong, bub.' });
           }
           return res.json({ redirect: '/logout' });
         });
+      });
+    });
+};
+
+/// ///
+const changeName = (request, response) => {
+  const req = request;
+  const res = response;
+
+  req.body.name = `${req.body.name}`;
+
+  return Account.AccountModel.authenticate(req.session.account.username, req.body.pass,
+    (err, account) => {
+      if (err || !account) {
+        return res.status(401).json({ error: 'An error has occured, bub.' });
+      }
+
+      const accountData = {
+        username: req.session.account.username,
+        name: req.body.name,
+      };
+
+      return Account.AccountModel.changeName(accountData, (errr, docs) => {
+        if (errr) {
+          console.log(errr);
+          return res.status(400).json({ error: 'Something went wrong, bub.' });
+        }
+        return res.json({ redirect: '/logout' });
+      });
+    });
+};
+
+const changeEmail = (request, response) => {
+  const req = request;
+  const res = response;
+
+  req.body.email = `${req.body.email}`;
+
+  return Account.AccountModel.authenticate(req.session.account.username, req.body.pass,
+    (err, account) => {
+      if (err || !account) {
+        return res.status(401).json({ error: 'An error has occured, bub.' });
+      }
+
+      const accountData = {
+        username: req.session.account.username,
+        email: req.body.email,
+      };
+
+      return Account.AccountModel.changeName(accountData, (errr, docs) => {
+        if (errr) {
+          console.log(errr);
+          return res.status(400).json({ error: 'Something went wrong, bub.' });
+        }
+      });
+    });
+};
+
+const changeAddress = (request, response) => {
+  const req = request;
+  const res = response;
+
+  req.body.address = `${req.body.address}`;
+
+  return Account.AccountModel.authenticate(req.session.account.username, req.body.pass,
+    (err, account) => {
+      if (err || !account) {
+        return res.status(401).json({ error: 'An error has occured, bub.' });
+      }
+
+      const accountData = {
+        username: req.session.account.username,
+        address: req.body.address,
+      };
+
+      return Account.AccountModel.changeName(accountData, (errr, docs) => {
+        if (errr) {
+          console.log(errr);
+          return res.status(400).json({ error: 'Something went wrong, bub.' });
+        }
+      });
+    });
+};
+
+const changeCard = (request, response) => {
+  const req = request;
+  const res = response;
+
+  req.body.card = `${req.body.card}`;
+
+  return Account.AccountModel.authenticate(req.session.account.username, req.body.pass,
+    (err, account) => {
+      if (err || !account) {
+        return res.status(401).json({ error: 'An error has occured, bub.' });
+      }
+
+      const accountData = {
+        username: req.session.account.username,
+        card: req.body.card,
+      };
+
+      return Account.AccountModel.changeName(accountData, (errr, docs) => {
+        if (errr) {
+          console.log(errr);
+          return res.status(400).json({ error: 'Something went wrong, bub.' });
+        }
+        return res.json({ redirect: '/logout' });
+      });
+    });
+};
+
+const changeCode = (request, response) => {
+  const req = request;
+  const res = response;
+
+  req.body.code = `${req.body.code}`;
+
+  return Account.AccountModel.authenticate(req.session.account.username, req.body.pass,
+    (err, account) => {
+      if (err || !account) {
+        return res.status(401).json({ error: 'An error has occured, bub.' });
+      }
+
+      const accountData = {
+        username: req.session.account.username,
+        code: req.body.code,
+      };
+
+      return Account.AccountModel.changeName(accountData, (errr, docs) => {
+        if (errr) {
+          console.log(errr);
+          return res.status(400).json({ error: 'Something went wrong, bub.' });
+        }
+      });
+    });
+};
+
+const changeMoney = (request, response) => {
+  const req = request;
+  const res = response;
+
+  req.body.money = `${req.body.money}`;
+
+  return Account.AccountModel.authenticate(req.session.account.username, req.body.pass,
+    (err, account) => {
+      if (err || !account) {
+        return res.status(401).json({ error: 'An error has occured, bub.' });
+      }
+
+      const accountData = {
+        username: req.session.account.username,
+        money: req.body.money,
+      };
+
+      return Account.AccountModel.changeName(accountData, (errr, docs) => {
+        if (errr) {
+          console.log(errr);
+          return res.status(400).json({ error: 'Something went wrong, bub.' });
+        }
       });
     });
 };
@@ -150,3 +302,9 @@ module.exports.logout = logout;
 module.exports.signup = signup;
 module.exports.getToken = getToken;
 module.exports.changePassword = changePassword;
+module.exports.changeName = changeName;
+module.exports.changeEmail = changeEmail;
+module.exports.changeAddress = changeAddress;
+module.exports.changeCard = changeCard;
+module.exports.changeCode = changeCode;
+module.exports.changeMoney = changeMoney;

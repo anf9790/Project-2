@@ -1,10 +1,13 @@
 const handleError = (message) => {
     $("#errorMessage").text(message);
     $("#NFTMessage").animate({width:'toggle'},350);
+    setTimeout(function() {$("#NFTMessage").animate({width:'toggle'},350)}, 2500);
 };
 
 const handleText = (message) => {
     $("#errorMessage").text(message);
+    $("#NFTMessage").animate({width:'toggle'},350);
+    setTimeout(function() {$("#NFTMessage").animate({width:'toggle'},350)}, 2500);
 };
 
 const redirect = (response) => {

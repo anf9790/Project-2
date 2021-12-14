@@ -20,6 +20,18 @@ var handleDelete = function handleDelete(NFT) {
   sendAjax('DELETE', '/delete-NFT', deleteData, loadNFTsFromServer); // Creates whitty one-liners from NFT!
 
   handleText(randomPassLine());
+}; // Functionally identical to the above sadly, I couldn't get it to work...
+
+
+var handlePurchase = function handlePurchase(NFT) {
+  var NFTId = NFT._id;
+
+  var _csrf = document.querySelector("#tokenInput");
+
+  var deleteData = "_csrf=".concat(_csrf.value, "&NFTId=").concat(NFTId);
+  sendAjax('DELETE', '/delete-NFT', deleteData, loadNFTsFromServer); // Creates whitty one-liners from NFT!
+
+  handleText(randomBuyLine());
 };
 
 var handlePassword = function handlePassword(e) {
@@ -38,7 +50,27 @@ var handlePassword = function handlePassword(e) {
     return false;
   }
 
-  sendAjax('POST', $("#accountForm").attr("action"), $("#accountForm").serialize(), redirect);
+  sendAjax('POST', '/passChange', $("#accountForm").serialize(), redirect);
+  return false;
+};
+
+var handlePersonal = function handlePersonal(e) {
+  e.preventDefault();
+  if ($("#name").val() != '') sendAjax('POST', '/nameChange', $("#accountForm").serialize(), redirect);
+  if ($("#email").val() != '') sendAjax('POST', '/emailChange', $("#accountForm").serialize(), redirect);
+  return false;
+};
+
+var handleAddress = function handleAddress(e) {
+  e.preventDefault();
+  if ($("#address").val() != '') sendAjax('POST', '/addressChange', $("#accountForm").serialize(), redirect);
+  return false;
+};
+
+var handlePayment = function handlePayment(e) {
+  e.preventDefault();
+  if ($("#card").val() != '') sendAjax('POST', '/cardChange', $("#accountForm").serialize(), redirect);
+  if ($("#code").val() != '') sendAjax('POST', '/codeChange', $("#accountForm").serialize(), redirect);
   return false;
 };
 
@@ -87,19 +119,19 @@ var NFTList = function NFTList(props) {
       className: "NFTidNum"
     }, " idNum: ", NFT.idNum, " "), /*#__PURE__*/React.createElement("h3", {
       className: "value"
-    }, " Value: ", NFT.value, " Crypt&#8209Toes"), /*#__PURE__*/React.createElement("input", {
-      className: "NFTRelease",
+    }, " Value: ", NFT.value, " Crypt-Toes"), /*#__PURE__*/React.createElement("input", {
+      className: "NFTbutt",
       type: "submit",
       value: "Pass",
       onClick: function onClick() {
         return handleDelete(NFT);
       }
     }), /*#__PURE__*/React.createElement("input", {
-      className: "NFTRelease",
+      className: "NFTbutt",
       type: "submit",
       value: "Buy",
       onClick: function onClick() {
-        return handleDelete(NFT);
+        return handlePurchase(NFT);
       }
     }));
   });
@@ -160,14 +192,120 @@ var randomPassLine = function randomPassLine() {
   }
 };
 
+var randomBuyLine = function randomBuyLine() {
+  switch (Math.floor(Math.random() * 10)) {
+    case 0:
+      return "Excellent purchase.";
+      break;
+
+    case 1:
+      return "You're too kind.";
+      break;
+
+    case 2:
+      return "Are you gonna need help carrying that fake toad?";
+      break;
+
+    case 3:
+      return "Why stop at one?";
+      break;
+
+    case 4:
+      return "Great choice.";
+      break;
+
+    case 5:
+      return "They're all the rage with middle aged men!";
+      break;
+
+    case 6:
+      return "Are you one one of those 'Crypt-Toe-Bros'?";
+      break;
+
+    case 7:
+      return "What's that bub, you live in your mom's basement?";
+      break;
+
+    case 8:
+      return "Where do you find all these crypts with all these toes?.";
+      break;
+
+    case 9:
+      return "Come back soon!... Or stay, that's alright too.";
+      break;
+  }
+}; // Contains all of the account-changing options
+
+
 var AccountWindow = function AccountWindow(props) {
   return /*#__PURE__*/React.createElement("form", {
     id: "accountForm",
     name: "accountForm",
-    onSubmit: handlePassword,
-    action: "/passChange",
     method: "POST",
-    className: "mainForm"
+    className: "accountForm"
+  }, /*#__PURE__*/React.createElement("div", {
+    id: "passDiv"
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "nameLabel",
+    htmlFor: "name"
+  }, "Name: "), /*#__PURE__*/React.createElement("input", {
+    id: "name",
+    type: "name",
+    name: "name",
+    placeholder: props.name
+  }), /*#__PURE__*/React.createElement("label", {
+    className: "emailLabel",
+    htmlFor: "email"
+  }, "Email: "), /*#__PURE__*/React.createElement("input", {
+    id: "email",
+    type: "email",
+    name: "email",
+    placeholder: props.email
+  }), /*#__PURE__*/React.createElement("input", {
+    className: "formSubmit",
+    type: "submit",
+    value: "Update",
+    onClick: handlePersonal
+  })), /*#__PURE__*/React.createElement("div", {
+    id: "passDiv"
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "addressLabel",
+    htmlFor: "address"
+  }, "Address: "), /*#__PURE__*/React.createElement("input", {
+    id: "address",
+    type: "address",
+    name: "address",
+    placeholder: props.address
+  }), /*#__PURE__*/React.createElement("input", {
+    className: "formSubmit",
+    type: "submit",
+    value: "Update",
+    onClick: handleAddress
+  })), /*#__PURE__*/React.createElement("div", {
+    id: "passDiv"
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "cardLabel",
+    htmlFor: "card"
+  }, "Card: "), /*#__PURE__*/React.createElement("input", {
+    id: "card",
+    type: "card",
+    name: "card",
+    placeholder: props.card
+  }), /*#__PURE__*/React.createElement("label", {
+    className: "codeLabel",
+    htmlFor: "code"
+  }, "CVV: "), /*#__PURE__*/React.createElement("input", {
+    id: "code",
+    type: "code",
+    name: "code",
+    placeholder: props.code
+  }), /*#__PURE__*/React.createElement("input", {
+    className: "formSubmit",
+    type: "submit",
+    value: "Update",
+    onClick: handlePayment
+  })), /*#__PURE__*/React.createElement("div", {
+    id: "passDiv"
   }, /*#__PURE__*/React.createElement("label", {
     className: "passwordLabel",
     htmlFor: "pass"
@@ -185,20 +323,21 @@ var AccountWindow = function AccountWindow(props) {
     name: "pass2",
     placeholder: "new password"
   }), /*#__PURE__*/React.createElement("input", {
+    className: "formSubmit",
+    type: "submit",
+    value: "Update",
+    onClick: handlePassword
+  })), /*#__PURE__*/React.createElement("input", {
     type: "hidden",
     name: "_csrf",
     value: props.csrf
-  }), /*#__PURE__*/React.createElement("input", {
-    className: "formSubmit",
-    type: "submit",
-    value: "Change Password"
   }));
 };
 
 var createAccountWindow = function createAccountWindow(csrf) {
   ReactDOM.render( /*#__PURE__*/React.createElement(AccountWindow, {
     csrf: csrf
-  }), document.querySelector("#content"));
+  }), document.querySelector("#NFTs"));
 };
 
 var createNFTWindow = function createNFTWindow(csrf) {
@@ -245,10 +384,23 @@ var handleError = function handleError(message) {
   $("#NFTMessage").animate({
     width: 'toggle'
   }, 350);
+  setTimeout(function () {
+    $("#NFTMessage").animate({
+      width: 'toggle'
+    }, 350);
+  }, 2500);
 };
 
 var handleText = function handleText(message) {
   $("#errorMessage").text(message);
+  $("#NFTMessage").animate({
+    width: 'toggle'
+  }, 350);
+  setTimeout(function () {
+    $("#NFTMessage").animate({
+      width: 'toggle'
+    }, 350);
+  }, 2500);
 };
 
 var redirect = function redirect(response) {

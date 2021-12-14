@@ -7,7 +7,7 @@ var handleLogin = function handleLogin(e) {
   }, 350);
 
   if ($("#user").val() == '' || $("#pass").val() == '') {
-    handleError("RAWR! Username or password is empty");
+    handleError("Hey bub, you forgot something.");
     return false;
   }
 
@@ -23,12 +23,12 @@ var handleSignup = function handleSignup(e) {
   }, 350);
 
   if ($("#user").val() == '' || $("#pass").val() == '' || $("#pass2").val() == '') {
-    handleError("RAWR! All fields are required");
+    handleError("You need to think of a username AND a password if you want in here.");
     return false;
   }
 
   if ($("#pass").val() !== $("#pass2").val()) {
-    handleError("RAWR! Passwords do not match");
+    handleError("Is this some sorta sting operation? Those passwords don't match...");
     return false;
   }
 
@@ -153,10 +153,23 @@ var handleError = function handleError(message) {
   $("#NFTMessage").animate({
     width: 'toggle'
   }, 350);
+  setTimeout(function () {
+    $("#NFTMessage").animate({
+      width: 'toggle'
+    }, 350);
+  }, 2500);
 };
 
 var handleText = function handleText(message) {
   $("#errorMessage").text(message);
+  $("#NFTMessage").animate({
+    width: 'toggle'
+  }, 350);
+  setTimeout(function () {
+    $("#NFTMessage").animate({
+      width: 'toggle'
+    }, 350);
+  }, 2500);
 };
 
 var redirect = function redirect(response) {

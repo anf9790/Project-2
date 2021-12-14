@@ -54,6 +54,12 @@ AccountSchema.statics.toAPI = (doc) => ({
   // _id is built into your mongo document and is guaranteed to be unique.
   username: doc.username,
   _id: doc._id,
+  name: doc.name,
+  email: doc.email,
+  address: doc.address,
+  credit: doc.credit,
+  code: doc.code,
+  money: doc.code,
 });
 
 const validatePassword = (doc, password, callback) => {
@@ -101,14 +107,78 @@ AccountSchema.statics.authenticate = (username, password, callback) => {
   });
 };
 
-AccountSchema.statics.getAccounts = (callback) => AccountModel.find().select('username createdDate').lean().exec(callback);
-
 AccountSchema.statics.replacePass = (account, callback) => {
   const query = { username: account.username };
   const update = {
     $set: {
       salt: account.salt,
       password: account.password,
+    },
+  };
+  const options = { upsert: false };
+  AccountModel.updateOne(query, update, options).exec(callback);
+};
+
+AccountSchema.statics.setName = (account, callback) => {
+  const query = { username: account.username };
+  const update = {
+    $set: {
+      name: account.name,
+    },
+  };
+  const options = { upsert: false };
+  AccountModel.updateOne(query, update, options).exec(callback);
+};
+
+AccountSchema.statics.setEmail = (account, callback) => {
+  const query = { username: account.username };
+  const update = {
+    $set: {
+      email: account.email,
+    },
+  };
+  const options = { upsert: false };
+  AccountModel.updateOne(query, update, options).exec(callback);
+};
+
+AccountSchema.statics.setAddress = (account, callback) => {
+  const query = { username: account.username };
+  const update = {
+    $set: {
+      address: account.address,
+    },
+  };
+  const options = { upsert: false };
+  AccountModel.updateOne(query, update, options).exec(callback);
+};
+
+AccountSchema.statics.setCard = (account, callback) => {
+  const query = { username: account.username };
+  const update = {
+    $set: {
+      card: account.card,
+    },
+  };
+  const options = { upsert: false };
+  AccountModel.updateOne(query, update, options).exec(callback);
+};
+
+AccountSchema.statics.setCode = (account, callback) => {
+  const query = { username: account.username };
+  const update = {
+    $set: {
+      code: account.code,
+    },
+  };
+  const options = { upsert: false };
+  AccountModel.updateOne(query, update, options).exec(callback);
+};
+
+AccountSchema.statics.setMoney = (account, callback) => {
+  const query = { username: account.username };
+  const update = {
+    $set: {
+      money: account.money,
     },
   };
   const options = { upsert: false };
