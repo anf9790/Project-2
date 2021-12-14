@@ -1,4 +1,3 @@
-const req = require('express/lib/request');
 const models = require('../models');
 
 const { Account } = models;
@@ -12,9 +11,7 @@ const logout = (req, res) => {
   res.redirect('/');
 };
 
-const login = (request, response) => {
-  const req = request;
-  const res = response;
+const login = (req, res) => {
   const username = `${req.body.username}`;
   const password = `${req.body.pass}`;
 
@@ -33,10 +30,7 @@ const login = (request, response) => {
   });
 };
 
-const signup = (request, response) => {
-  const req = request;
-  const res = response;
-
+const signup = (req, res) => {
   // Cast strings to cover up some security flaws.
   req.body.username = `${req.body.username}`;
   req.body.pass = `${req.body.pass}`;
@@ -85,10 +79,7 @@ const signup = (request, response) => {
 };
 
 // Changing the password
-const changePassword = (request, response) => {
-  const req = request;
-  const res = response;
-
+const changePassword = (req, res) => {
   req.body.pass = `${req.body.pass}`;
   req.body.pass2 = `${req.body.pass2}`;
 
@@ -127,10 +118,7 @@ const changePassword = (request, response) => {
 };
 
 /// ///
-const changeName = (request, response) => {
-  const req = request;
-  const res = response;
-
+const changeName = (req, res) => {
   req.body.name = `${req.body.name}`;
 
   return Account.AccountModel.authenticate(req.session.account.username, req.body.pass,
@@ -154,10 +142,7 @@ const changeName = (request, response) => {
     });
 };
 
-const changeEmail = (request, response) => {
-  const req = request;
-  const res = response;
-
+const changeEmail = (req, res) => {
   req.body.email = `${req.body.email}`;
 
   return Account.AccountModel.authenticate(req.session.account.username, req.body.pass,
@@ -176,14 +161,12 @@ const changeEmail = (request, response) => {
           console.log(errr);
           return res.status(400).json({ error: 'Something went wrong, bub.' });
         }
+        return res.json({ redirect: '/logout' });
       });
     });
 };
 
-const changeAddress = (request, response) => {
-  const req = request;
-  const res = response;
-
+const changeAddress = (req, res) => {
   req.body.address = `${req.body.address}`;
 
   return Account.AccountModel.authenticate(req.session.account.username, req.body.pass,
@@ -202,14 +185,12 @@ const changeAddress = (request, response) => {
           console.log(errr);
           return res.status(400).json({ error: 'Something went wrong, bub.' });
         }
+        return res.json({ redirect: '/logout' });
       });
     });
 };
 
-const changeCard = (request, response) => {
-  const req = request;
-  const res = response;
-
+const changeCard = (req, res) => {
   req.body.card = `${req.body.card}`;
 
   return Account.AccountModel.authenticate(req.session.account.username, req.body.pass,
@@ -233,10 +214,7 @@ const changeCard = (request, response) => {
     });
 };
 
-const changeCode = (request, response) => {
-  const req = request;
-  const res = response;
-
+const changeCode = (req, res) => {
   req.body.code = `${req.body.code}`;
 
   return Account.AccountModel.authenticate(req.session.account.username, req.body.pass,
@@ -255,14 +233,12 @@ const changeCode = (request, response) => {
           console.log(errr);
           return res.status(400).json({ error: 'Something went wrong, bub.' });
         }
+        return res.json({ redirect: '/logout' });
       });
     });
 };
 
-const changeMoney = (request, response) => {
-  const req = request;
-  const res = response;
-
+const changeMoney = (req, res) => {
   req.body.money = `${req.body.money}`;
 
   return Account.AccountModel.authenticate(req.session.account.username, req.body.pass,
@@ -281,14 +257,12 @@ const changeMoney = (request, response) => {
           console.log(errr);
           return res.status(400).json({ error: 'Something went wrong, bub.' });
         }
+        return res.json({ redirect: '/logout' });
       });
     });
 };
 
-const getToken = (request, response) => {
-  const req = request;
-  const res = response;
-
+const getToken = (req, res) => {
   const csrfJSON = {
     csrfToken: req.csrfToken(),
   };
