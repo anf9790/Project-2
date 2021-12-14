@@ -7,7 +7,7 @@ var handleLogin = function handleLogin(e) {
   }, 350);
 
   if ($("#user").val() == '' || $("#pass").val() == '') {
-    handleError("Hey you didn't input anything, bub.");
+    handleError("RAWR! Username or password is empty");
     return false;
   }
 
@@ -23,12 +23,12 @@ var handleSignup = function handleSignup(e) {
   }, 350);
 
   if ($("#user").val() == '' || $("#pass").val() == '' || $("#pass2").val() == '') {
-    handleError("I think you forgot something, bub.");
+    handleError("RAWR! All fields are required");
     return false;
   }
 
   if ($("#pass").val() !== $("#pass2").val()) {
-    handleError("Those passwords don\'t match, bub. Are you one of those \"write-clickers\"");
+    handleError("RAWR! Passwords do not match");
     return false;
   }
 
@@ -44,7 +44,7 @@ var LoginWindow = function LoginWindow(props) {
     action: "/login",
     method: "POST",
     className: "mainForm"
-  }, /*#__PURE__*/React.createElement("h1", null, "NFT'S NFTS"), /*#__PURE__*/React.createElement("h2", null, "(Nice Fungi Toadstool's Neat Fricken Toads)"), /*#__PURE__*/React.createElement("label", {
+  }, /*#__PURE__*/React.createElement("label", {
     htmlFor: "username"
   }, "Username: "), /*#__PURE__*/React.createElement("input", {
     id: "user",
@@ -77,7 +77,7 @@ var SignupWindow = function SignupWindow(props) {
     action: "/signup",
     method: "POST",
     className: "mainForm"
-  }, /*#__PURE__*/React.createElement("h1", null, "NFT'S NFTS"), /*#__PURE__*/React.createElement("h2", null, "(Nice Fungi Toadstool's Neat Fricken Toads)"), /*#__PURE__*/React.createElement("label", {
+  }, /*#__PURE__*/React.createElement("label", {
     htmlFor: "username"
   }, "Username: "), /*#__PURE__*/React.createElement("input", {
     id: "user",

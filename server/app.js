@@ -59,7 +59,7 @@ app.use(session({
   store: new RedisStore({
     client: redisClient,
   }),
-  secret: 'NFT Arigato',
+  secret: 'Right Clickoid',
   resave: true,
   saveUninitialized: true,
   cookie: {

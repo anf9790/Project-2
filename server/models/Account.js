@@ -101,6 +101,20 @@ AccountSchema.statics.authenticate = (username, password, callback) => {
   });
 };
 
+AccountSchema.statics.getAccounts = (callback) => AccountModel.find().select('username createdDate').lean().exec(callback);
+
+AccountSchema.statics.replacePass = (account, callback) => {
+  const query = { username: account.username };
+  const update = {
+    $set: {
+      salt: account.salt,
+      password: account.password,
+    },
+  };
+  const options = { upsert: false };
+  AccountModel.updateOne(query, update, options).exec(callback);
+};
+
 AccountModel = mongoose.model('Account', AccountSchema);
 
 module.exports.AccountModel = AccountModel;

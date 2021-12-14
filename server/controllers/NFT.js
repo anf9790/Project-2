@@ -13,14 +13,14 @@ const makerPage = (req, res) => {
 };
 
 const makeNFT = (req, res) => {
-  const color = "#" + Math.floor(Math.random()*16777215).toString(16);
-  const idNum = Math.floor(Math.random()*1000000);
-  const value = Math.round(((Math.random()*10) + Number.EPSILON) * 100) / 100;
+  const color = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+  const idNum = Math.floor(Math.random() * 1000000);
+  const value = Math.round(((Math.random() * 10) + Number.EPSILON) * 100) / 100;
 
   const NFTData = {
-    color: color,
-    idNum: idNum,
-    value: value,
+    color,
+    idNum,
+    value,
     owner: req.session.account._id,
   };
 
@@ -71,9 +71,7 @@ const deleteNFT = (request, response) => {
   });
 };
 
-
 module.exports.makerPage = makerPage;
 module.exports.getNFTs = getNFTs;
 module.exports.deleteNFT = deleteNFT;
 module.exports.make = makeNFT;
-module.exports.collection = getNFTs;

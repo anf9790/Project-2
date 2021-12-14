@@ -4,7 +4,7 @@ const handleLogin = (e) => {
     $("#NFTMessage").animate({width:'hide'},350);
 
     if($("#user").val()== ''|| $("#pass").val()==''){
-        handleError("Hey you didn't input anything, bub.");
+        handleError("RAWR! Username or password is empty");
         return false;
     }
 
@@ -21,12 +21,12 @@ const handleSignup = (e) => {
     $("#NFTMessage").animate({width:'hide'},350);
 
     if($("#user").val()== ''|| $("#pass").val()==''|| $("#pass2").val()==''){
-        handleError("I think you forgot something, bub.");
+        handleError("RAWR! All fields are required");
         return false;
     }
 
     if($("#pass").val()!== $("#pass2").val()){
-        handleError("Those passwords don\'t match, bub. Are you one of those \"write-clickers\"");
+        handleError("RAWR! Passwords do not match");
         return false;
     }
 
@@ -43,8 +43,6 @@ const LoginWindow = (props) => {
         method="POST"
         className="mainForm"
         >
-            <h1>NFT'S NFTS</h1>
-            <h2>(Nice Fungi Toadstool's Neat Fricken Toads)</h2>
             <label htmlFor="username">Username: </label>
             <input id="user" type="text" name="username" placeholder="username"/>
             <label htmlFor="pass">Password: </label>
@@ -64,8 +62,6 @@ const SignupWindow = (props) => {
         method="POST"
         className="mainForm"
         >
-            <h1>NFT'S NFTS</h1>
-            <h2>(Nice Fungi Toadstool's Neat Fricken Toads)</h2>
             <label htmlFor="username">Username: </label>
             <input id="user" type="text" name="username" placeholder="username"/>
             <label htmlFor="pass">Password: </label>

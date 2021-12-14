@@ -17,129 +17,29 @@ var handleDelete = function handleDelete(NFT) {
   var _csrf = document.querySelector("#tokenInput");
 
   var deleteData = "_csrf=".concat(_csrf.value, "&NFTId=").concat(NFTId);
-  sendAjax('DELETE', '/delete-NFT', deleteData, loadNFTsFromServer);
-  handleError(randomPassLine());
+  sendAjax('DELETE', '/delete-NFT', deleteData, loadNFTsFromServer); // Creates whitty one-liners from NFT!
+
+  handleText(randomPassLine());
 };
-/*
-const handleUpdate = (e) => {
-    e.preventDefault();
-
-    $("#NFTMessage").animate({width:'hide'},350);
-
-    if($("#user").val()== ''|| $("#pass").val()==''|| $("#pass2").val()==''){
-        handleError("I think you forgot something, bub.");
-        return false;
-    }
-
-    if($("#pass").val()!== $("#pass2").val()){
-        handleError("Those passwords don\'t match, bub. Are you one of those \"write-clickers\"");
-        return false;
-    }
-
-    sendAjax('POST', $("#signupForm").attr("action"), $("#signupForm").serialize(), redirect);
-
-    return false;
-    const NFTId = NFT._id
-    const _csrf = document.querySelector("#tokenInput");
-    const deleteData = `_csrf=${_csrf.value}&NFTId=${NFTId}`;
-    sendAjax('POST', $("#infoForm").attr("action"), $("#infoForm").serialize(), redirect);
-
-    return false;
-};*/
-// Handles password changing.
-
 
 var handlePassword = function handlePassword(e) {
   e.preventDefault();
-  $("#NFTMessage").animate({
+  $("NFTMessage").animate({
     width: 'hide'
   }, 350);
 
   if ($("#pass").val() == '' || $("#pass2").val() == '') {
-    handleError("I think you forgot something, bub.");
-
-    if ($("#pass").val() != $("#pass2").val()) {
-      handleError("Those two don't match, bub.");
-      return false;
-    }
+    handleError("Both fields are required, bub.");
+    return false;
   }
 
-  sendAjax('POST', '/password', $("#accountForm").serialize(), redirect);
-  return false;
-};
+  if ($("#pass").val() === $("#pass2").val()) {
+    handleError("They should be different passwords, bub.");
+    return false;
+  }
 
-var handleName = function handleName(e) {
-  e.preventDefault();
-  $("#NFTMessage").animate({
-    width: 'hide'
-  }, 350);
+  sendAjax('POST', $("#accountForm").attr("action"), $("#accountForm").serialize(), redirect);
   return false;
-};
-
-var AccountWindow = function AccountWindow(props) {
-  /*#__PURE__*/
-  React.createElement("form", {
-    id: "accountForm",
-    name: "accountForm",
-    action: "/account",
-    method: "POST",
-    className: "infoForm"
-  }, /*#__PURE__*/React.createElement("label", {
-    "for": "pass"
-  }, "New Password: "), /*#__PURE__*/React.createElement("input", {
-    id: "pass",
-    type: "password",
-    name: "pass"
-  }), /*#__PURE__*/React.createElement("label", {
-    "for": "pass2"
-  }, "Retype New password: "), /*#__PURE__*/React.createElement("input", {
-    id: "pass2",
-    type: "password",
-    name: "pass2"
-  }), /*#__PURE__*/React.createElement("input", {
-    "class": "formSubmit",
-    type: "submit",
-    value: "Change Password",
-    onClick: handlePassword(props)
-  }), /*#__PURE__*/React.createElement("label", {
-    "for": "name"
-  }, "Name: "), /*#__PURE__*/React.createElement("input", {
-    id: "name",
-    type: "name",
-    name: "name"
-  }), /*#__PURE__*/React.createElement("label", {
-    "for": "email"
-  }, "Email: "), /*#__PURE__*/React.createElement("input", {
-    id: "email",
-    type: "email",
-    name: "email"
-  }), /*#__PURE__*/React.createElement("label", {
-    "for": "address"
-  }, "Address: "), /*#__PURE__*/React.createElement("input", {
-    id: "address",
-    type: "address",
-    name: "address"
-  }), /*#__PURE__*/React.createElement("label", {
-    "for": "card"
-  }, "Credit Card: "), /*#__PURE__*/React.createElement("input", {
-    id: "card",
-    type: "card",
-    name: "card",
-    placeholder: "XXX-XXX-XXX"
-  }), /*#__PURE__*/React.createElement("label", {
-    "for": "code"
-  }, "Security Code: "), /*#__PURE__*/React.createElement("input", {
-    id: "code",
-    type: "code",
-    name: "code",
-    placeholder: "xxxx"
-  }), /*#__PURE__*/React.createElement("input", {
-    type: "hidden",
-    name: "_csrf",
-    value: {
-      csrfToken: csrfToken
-    }
-  }));
 };
 
 var NFTForm = function NFTForm(props) {
@@ -168,7 +68,7 @@ var NFTList = function NFTList(props) {
       className: "NFTList"
     }, /*#__PURE__*/React.createElement("h3", {
       className: "emptyNFT"
-    }, "No NFTs yet"));
+    }, "Oops, no more NFTs! Time to invest!"));
   }
 
   var NFTNodes = props.NFTs.map(function (NFT) {
@@ -187,7 +87,7 @@ var NFTList = function NFTList(props) {
       className: "NFTidNum"
     }, " idNum: ", NFT.idNum, " "), /*#__PURE__*/React.createElement("h3", {
       className: "value"
-    }, " Value: ", NFT.value, " Crypt-Toes"), /*#__PURE__*/React.createElement("input", {
+    }, " Value: ", NFT.value, " Crypt&#8209Toes"), /*#__PURE__*/React.createElement("input", {
       className: "NFTRelease",
       type: "submit",
       value: "Pass",
@@ -258,119 +158,47 @@ var randomPassLine = function randomPassLine() {
       return "Y'know window shopping is pretty, bub.";
       break;
   }
-}; //////
-
-/*
-const infoForm = (props) => {
-    return(
-        <form id="infoForm" 
-        name="infoForm"
-        action="/info"
-        method="POST"
-        className="infoForm"
-        >
-            <label for="pass">New Password: </label>
-            <input id="pass" type="password" name="pass"/>
-            <label for="pass2">Retype New password: </label>
-            <input id="pass2" type="password" name="pass2"/>
-            <label for="name">Name: </label>
-            <input id="name" type="name" name="name"/>
-            <label for="email">Email: </label>
-            <input id="email" type="email" name="email"/>
-            <label for="address">Address: </label>
-            <input id="address" type="address" name="address"/>
-            <label for="card">Credit Card: </label>
-            <input id="card" type="card" name="card" placeholder="XXX-XXX-XXX"/>
-            <label for="code">Security Code: </label>
-            <input id="code" type="code" name="code" placeholder="xxxx"/>
-            <input type="hidden" name="_csrf" value={{csrfToken}} />
-            <input class="formSubmit" type="submit" value="Change Password" />
-        </form>
-    )
-};//onClick={()=>addMoney(props)}
-
-/*
-const addMoney = (prop) => {
-    prop.money += 50.00
-    sendAjax('POST', '/update', updateData, loadInfoFromServer);
-    handleError(randomPassLine());
 };
 
-const infoList = function(props) {
-    return (
-        <div key={props._id} 
-        className="info"
-        >
-            <h3 className="username"> Username: {props.username} </h3>
-            <h3 className="name"> Name: {props.name} </h3>
-            <h3 className="name"> Name: {props.name} </h3>
-            
-                <label for="money">Money: {{info.money}}</label>
-                <input className="addMoney" type="submit" value="Pass" />/
-        </div>
-    )
+var AccountWindow = function AccountWindow(props) {
+  return /*#__PURE__*/React.createElement("form", {
+    id: "accountForm",
+    name: "accountForm",
+    onSubmit: handlePassword,
+    action: "/passChange",
+    method: "POST",
+    className: "mainForm"
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "passwordLabel",
+    htmlFor: "pass"
+  }, "Old Password: "), /*#__PURE__*/React.createElement("input", {
+    id: "pass",
+    type: "password",
+    name: "pass",
+    placeholder: "old password"
+  }), /*#__PURE__*/React.createElement("label", {
+    className: "passwordLabel",
+    htmlFor: "pass2"
+  }, "New Password: "), /*#__PURE__*/React.createElement("input", {
+    id: "pass2",
+    type: "password",
+    name: "pass2",
+    placeholder: "new password"
+  }), /*#__PURE__*/React.createElement("input", {
+    type: "hidden",
+    name: "_csrf",
+    value: props.csrf
+  }), /*#__PURE__*/React.createElement("input", {
+    className: "formSubmit",
+    type: "submit",
+    value: "Change Password"
+  }));
 };
 
-const setup = function(csrf){
-    ReactDOM.render(
-        <update csrf={csrf}/>,document.querySelector("#makeNFT")
-    );
-
-    loadInfoFromServer();
-};
-
-const loadInfoFromServer =()=>{
-    sendAjax('GET', '/up',null,(data)=>{
-        ReactDOM.render(
-            <InfoList info={data.info} />, document.querySelector("#info")
-        )
-    })
-};*/
-//////
-
-/*
-const InfoWindow = (props) => {
-    return(
-        <form id="infoForm" name="infoForm"
-        onSubmit={handleUpdate}
-        action="/update"
-        method="POST"
-        className="NFTForm"
-        >
-            <label for="pass">New Password: </label>
-            <input id="pass" type="password" name="pass"/>
-            <label for="pass2">Retype New password: </label>
-            <input id="pass2" type="password" name="pass2"/>
-            <label for="name">Name: </label>
-            <input id="name" type="name" name="name"/>
-            <label for="email">Email: </label>
-            <input id="email" type="email" name="email"/>
-            <label for="address">Address: </label>
-            <input id="address" type="address" name="address"/>
-            <label for="card">Credit Card: </label>
-            <input id="card" type="card" name="card" placeholder="XXX-XXX-XXX"/>
-            <label for="code">Security Code: </label>
-            <input id="code" type="code" name="code" placeholder="xxxx"/>
-            <input type="hidden" name="_csrf" value={{csrfToken}} />
-            <input class="formSubmit" type="submit" value="Change Password" />
-
-        </form>
-    )
-}
-
-const createInfoWindow = (csrf) => {
-    ReactDOM.render(
-        <InfoWindow csrf={csrf} />,
-        document.querySelector("#NFTs")
-    )
-}
-*/
-
-
-var createAccountWindow = function createAccountWindow(crsf) {
+var createAccountWindow = function createAccountWindow(csrf) {
   ReactDOM.render( /*#__PURE__*/React.createElement(AccountWindow, {
     csrf: csrf
-  }), document.querySelector("#NFTs"));
+  }), document.querySelector("#content"));
 };
 
 var createNFTWindow = function createNFTWindow(csrf) {
@@ -385,18 +213,20 @@ var createNFTWindow = function createNFTWindow(csrf) {
 
 var setup = function setup(csrf) {
   var NFTButton = document.querySelector("#NFTButton");
-  var AccountButton = document.querySelector("#accountButton");
-  AccountButton.addEventListener("click", function (e) {
-    e.preventDefault();
-    createAccountWindow(csrf);
-    return false;
-  });
+  var accountButton = document.querySelector("#accountButton");
   NFTButton.addEventListener("click", function (e) {
     e.preventDefault();
     createNFTWindow(csrf);
     return false;
   });
+  accountButton.addEventListener("click", function (e) {
+    e.preventDefault();
+    createAccountWindow(csrf);
+    return false;
+  });
   createNFTWindow(csrf); //default view
+
+  loadNFTsFromServer();
 };
 
 var getToken = function getToken() {

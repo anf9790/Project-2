@@ -15,31 +15,23 @@ const login = (request, response) => {
   const req = request;
   const res = response;
 
-  // Force cast to strings to cover some security flaws.
-  const username = `${req.body.username}`;
-  const password = `${req.body.pass}`;
+  // cast to strings to cover up some security flaws
+  username = `${req.body.username}`;
+  password = `${req.body.pass}`;
 
   if (!username || !password) {
-    return res.status(400).json({ error: 'Hey bub, all the fields are required.' });
+    return res.status(400).json({ error: 'All fields are required, bub' });
   }
 
   return Account.AccountModel.authenticate(username, password, (err, account) => {
     if (err || !account) {
-      return res.status(401).json({ error: 'That\'s the wrong username and/or password, bub. I can\'t let you in.' });
+      return res.status(401).json({ error: 'Wrong username or password, bub.' });
     }
 
     req.session.account = Account.AccountModel.toAPI(account);
 
     return res.json({ redirect: '/maker' });
   });
-};
-
-const collectionPage = (req, res) => {
-  res.render('collection', { csrfToken: req.csrfToken() });
-};
-
-const infoPage = (req, res) => {
-  res.render('collection', { csrfToken: req.csrfToken() });
 };
 
 const signup = (request, response) => {
@@ -56,7 +48,7 @@ const signup = (request, response) => {
   }
 
   if (req.body.pass !== req.body.pass2) {
-    return res.status(400).json({ error: 'Those passwords don\'t match, bub. Are you one of those \"write-clickers\"' });
+    return res.status(400).json({ error: 'Those passwords don\'t match, bub. Are you one of those "write-clickers"' });
   }
 
   return Account.AccountModel.generateHash(req.body.pass, (salt, hash) => {
@@ -69,6 +61,7 @@ const signup = (request, response) => {
       address: '',
       credit: '',
       code: '',
+      money: 0,
     };
 
     const newAccount = new Account.AccountModel(accountData);
@@ -92,49 +85,52 @@ const signup = (request, response) => {
   });
 };
 
-const update = (request, response) => {
-  e.preventDefault();
+// Changing the password
+const changePassword = (request, response) => {
+  const req = request;
+  const res = response;
+  // Cast to strings to cover up some security flaws
+  req.body.pass = `${req.body.pass}`;
+  req.body.pass2 = `${req.body.pass2}`;
 
-  $("#NFTmessage").animate({ width: 'hide' }, 350);
-
-  
-  // If name is filled out...
-  if (!$("#name").val() == '') {
-    sendAjax($("#nameChangeForm").attr("action"), $("#nameChangeForm").serialize());
+  // Check if all fields aren't filled out.
+  if (!req.body.pass || !req.body.pass2) {
+    return res.status(400).json({ error: 'All fields are required, bub.' });
   }
 
-  // If email is filled out...
-  if (!$("#email").val() == '') {
-    sendAjax($("#emailChangeForm").attr("action"), $("#emailChangeForm").serialize());
+  // Check if passwords are the same.
+  if (req.body.pass === req.body.pass2) {
+    return res.status(400).json({ error: 'They have to be different passwords, bub.' });
   }
 
-  // If address is filled out...
-  if (!$("#address").val() == '') {
-    sendAjax($("#nameChangeForm").attr("action"), $("#addressChangeForm").serialize());
-  }
+  return Account.AccountModel.authenticate(req.session.account.username, req.body.pass,
+    (err, account) => {
+      if (err || !account) {
+        return res.status(401).json({ error: 'That\'s not the right password, bub.' });
+      }
 
-  // If credit card is filled out...
-  if (!$("#card").val() == '' || !$("#code").val() == '') {
-    sendAjax($("#cardChangeForm").attr("action"), $("#cardChangeForm").serialize());
-    sendAjax($("#codeChangeForm").attr("action"), $("#codeChangeForm").serialize());
-  }
+      return Account.AccountModel.generateHash(req.body.pass2, (salt, hash) => {
+        const accountData = {
+          username: req.session.account.username,
+          salt,
+          password: hash,
+          name: '',
+          email: '',
+          address: '',
+          credit: '',
+          code: '',
+          money: 0,
+        };
 
-  // If password is filled out...
-  if (!$("#pass").val() == '' && !$("#pass2").val() == '') {
-    if ($("#pass").val() == $("#pass2").val()) {
-      sendAjax($("#passwordChangeForm").attr("action"), $("#passwordChangeForm").serialize());
-    }
-    else {
-      handleError("Those aren't the same password, bub.");
-      return false;
-    }
-  }
-  else {
-    handleError("You need both, bub.");
-      return false;
-  }
-
-  return false;
+        return Account.AccountModel.replacePass(accountData, (errr, docs) => {
+          if (errr) {
+            console.log(err);
+            return res.status(400).json({ error: 'Something went wrong, bub.' });
+          }
+          return res.json({ redirect: '/logout' });
+        });
+      });
+    });
 };
 
 const getToken = (request, response) => {
@@ -153,6 +149,4 @@ module.exports.login = login;
 module.exports.logout = logout;
 module.exports.signup = signup;
 module.exports.getToken = getToken;
-module.exports.collectionPage = collectionPage;
-module.exports.infoPage = infoPage;
-module.exports.update = update;
+module.exports.changePassword = changePassword;

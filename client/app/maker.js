@@ -15,87 +15,28 @@ const handleDelete = (NFT) => {
     const _csrf = document.querySelector("#tokenInput");
     const deleteData = `_csrf=${_csrf.value}&NFTId=${NFTId}`;
     sendAjax('DELETE', '/delete-NFT', deleteData, loadNFTsFromServer);
-    handleError(randomPassLine());
+    // Creates whitty one-liners from NFT!
+    handleText(randomPassLine());
 }
 
-/*
-const handleUpdate = (e) => {
-    e.preventDefault();
-
-    $("#NFTMessage").animate({width:'hide'},350);
-
-    if($("#user").val()== ''|| $("#pass").val()==''|| $("#pass2").val()==''){
-        handleError("I think you forgot something, bub.");
-        return false;
-    }
-
-    if($("#pass").val()!== $("#pass2").val()){
-        handleError("Those passwords don\'t match, bub. Are you one of those \"write-clickers\"");
-        return false;
-    }
-
-    sendAjax('POST', $("#signupForm").attr("action"), $("#signupForm").serialize(), redirect);
-
-    return false;
-    const NFTId = NFT._id
-    const _csrf = document.querySelector("#tokenInput");
-    const deleteData = `_csrf=${_csrf.value}&NFTId=${NFTId}`;
-    sendAjax('POST', $("#infoForm").attr("action"), $("#infoForm").serialize(), redirect);
-
-    return false;
-};*/
-
-// Handles password changing.
 const handlePassword = (e) => {
     e.preventDefault();
 
-    $("#NFTMessage").animate({width:'hide'},350);
+    $("NFTMessage").animate({width:'hide'},350);
 
     if($("#pass").val()==''|| $("#pass2").val()==''){
-        handleError("I think you forgot something, bub.");
-        if($("#pass").val() != $("#pass2").val()){
-            handleError("Those two don't match, bub.");
-            return false;
-        }
+        handleError("Both fields are required, bub.");
+        return false;
     }
-    sendAjax('POST', '/password', $("#accountForm").serialize(), redirect);
+
+    if($("#pass").val() === $("#pass2").val()){
+        handleError("They should be different passwords, bub.");
+        return false;
+    }
+
+    sendAjax('POST', $("#accountForm").attr("action"), $("#accountForm").serialize(), redirect);
 
     return false;
-}
-
-const handleName = (e) => {
-    e.preventDefault();
-
-    $("#NFTMessage").animate({width:'hide'},350);
-
-    return false;
-}
-
-const AccountWindow = (props) => {
-    <form id="accountForm" 
-        name="accountForm"
-        action="/account"
-        method="POST"
-        className="infoForm"
-        >
-            <label for="pass">New Password: </label>
-            <input id="pass" type="password" name="pass"/>
-            <label for="pass2">Retype New password: </label>
-            <input id="pass2" type="password" name="pass2"/>
-            <input class="formSubmit" type="submit" value="Change Password" onClick={handlePassword(props)}/>
-
-            <label for="name">Name: </label>
-            <input id="name" type="name" name="name"/>
-            <label for="email">Email: </label>
-            <input id="email" type="email" name="email"/>
-            <label for="address">Address: </label>
-            <input id="address" type="address" name="address"/>
-            <label for="card">Credit Card: </label>
-            <input id="card" type="card" name="card" placeholder="XXX-XXX-XXX"/>
-            <label for="code">Security Code: </label>
-            <input id="code" type="code" name="code" placeholder="xxxx"/>
-            <input type="hidden" name="_csrf" value={{csrfToken}} />
-        </form>
 }
 
 const NFTForm = (props) => {
@@ -109,7 +50,6 @@ const NFTForm = (props) => {
         >
             <input id="tokenInput" type="hidden" name="_csrf" value={props.csrf}/>
             <input className="makeNFTSubmit" type="submit" value="Load Another NFT"/>
-            
         </form>
     )
 };
@@ -118,7 +58,7 @@ const NFTList = function(props) {
     if(props.NFTs.length === 0){
         return(
             <div className="NFTList">
-                <h3 className="emptyNFT">No NFTs yet</h3>
+                <h3 className="emptyNFT">Oops, no more NFTs! Time to invest!</h3>
             </div>
         )
     }
@@ -133,8 +73,9 @@ const NFTList = function(props) {
             >
                 <img src="/assets/img/toad.png" alt="NFT image" className="NFTFace" style={style}/>
                 <h3 className="NFTidNum"> idNum: {NFT.idNum} </h3>
-                <h3 className="value"> Value: {NFT.value} Crypt-Toes</h3>
+                <h3 className="value"> Value: {NFT.value} Crypt&#8209Toes</h3>
                 <input className="NFTRelease" type="submit" value="Pass" onClick={()=>handleDelete(NFT)}/>
+
                 <input className="NFTRelease" type="submit" value="Buy" onClick={()=>handleDelete(NFT)}/>
             </div>
         )
@@ -180,118 +121,30 @@ const randomPassLine = () => {
             break;
     }
 }
-
-//////
-/*
-const infoForm = (props) => {
+const AccountWindow = (props) => {
     return(
-        <form id="infoForm" 
-        name="infoForm"
-        action="/info"
+        <form id="accountForm" name="accountForm"
+        onSubmit={handlePassword}
+        action="/passChange"
         method="POST"
-        className="infoForm"
+        className="mainForm"
         >
-            <label for="pass">New Password: </label>
-            <input id="pass" type="password" name="pass"/>
-            <label for="pass2">Retype New password: </label>
-            <input id="pass2" type="password" name="pass2"/>
-            <label for="name">Name: </label>
-            <input id="name" type="name" name="name"/>
-            <label for="email">Email: </label>
-            <input id="email" type="email" name="email"/>
-            <label for="address">Address: </label>
-            <input id="address" type="address" name="address"/>
-            <label for="card">Credit Card: </label>
-            <input id="card" type="card" name="card" placeholder="XXX-XXX-XXX"/>
-            <label for="code">Security Code: </label>
-            <input id="code" type="code" name="code" placeholder="xxxx"/>
-            <input type="hidden" name="_csrf" value={{csrfToken}} />
-            <input class="formSubmit" type="submit" value="Change Password" />
-        </form>
-    )
-};//onClick={()=>addMoney(props)}
-
-/*
-const addMoney = (prop) => {
-    prop.money += 50.00
-    sendAjax('POST', '/update', updateData, loadInfoFromServer);
-    handleError(randomPassLine());
-};
-
-const infoList = function(props) {
-    return (
-        <div key={props._id} 
-        className="info"
-        >
-            <h3 className="username"> Username: {props.username} </h3>
-            <h3 className="name"> Name: {props.name} </h3>
-            <h3 className="name"> Name: {props.name} </h3>
-            
-                <label for="money">Money: {{info.money}}</label>
-                <input className="addMoney" type="submit" value="Pass" />/
-        </div>
-    )
-};
-
-const setup = function(csrf){
-    ReactDOM.render(
-        <update csrf={csrf}/>,document.querySelector("#makeNFT")
-    );
-
-    loadInfoFromServer();
-};
-
-const loadInfoFromServer =()=>{
-    sendAjax('GET', '/up',null,(data)=>{
-        ReactDOM.render(
-            <InfoList info={data.info} />, document.querySelector("#info")
-        )
-    })
-};*/
-//////
-/*
-const InfoWindow = (props) => {
-    return(
-        <form id="infoForm" name="infoForm"
-        onSubmit={handleUpdate}
-        action="/update"
-        method="POST"
-        className="NFTForm"
-        >
-            <label for="pass">New Password: </label>
-            <input id="pass" type="password" name="pass"/>
-            <label for="pass2">Retype New password: </label>
-            <input id="pass2" type="password" name="pass2"/>
-            <label for="name">Name: </label>
-            <input id="name" type="name" name="name"/>
-            <label for="email">Email: </label>
-            <input id="email" type="email" name="email"/>
-            <label for="address">Address: </label>
-            <input id="address" type="address" name="address"/>
-            <label for="card">Credit Card: </label>
-            <input id="card" type="card" name="card" placeholder="XXX-XXX-XXX"/>
-            <label for="code">Security Code: </label>
-            <input id="code" type="code" name="code" placeholder="xxxx"/>
-            <input type="hidden" name="_csrf" value={{csrfToken}} />
-            <input class="formSubmit" type="submit" value="Change Password" />
+            <label className="passwordLabel" htmlFor="pass">Old Password: </label>
+            <input id="pass" type="password" name="pass" placeholder="old password"/>
+            <label className="passwordLabel" htmlFor="pass2">New Password: </label>
+            <input id="pass2" type="password" name="pass2" placeholder="new password"/>
+            <input type="hidden" name="_csrf" value={props.csrf}/>
+            <input className="formSubmit" type="submit" value="Change Password"/>
 
         </form>
     )
 }
 
-const createInfoWindow = (csrf) => {
+const createAccountWindow = (csrf) => {
     ReactDOM.render(
-        <InfoWindow csrf={csrf} />,
-        document.querySelector("#NFTs")
+        <AccountWindow csrf={csrf} />,
+        document.querySelector("#content")
     )
-}
-*/
-
-const createAccountWindow = (crsf) => {
-    ReactDOM.render(
-        <AccountWindow csrf={csrf}/>,document.querySelector("#NFTs")
-    );
-
 }
 
 const createNFTWindow = (csrf) => {
@@ -307,13 +160,7 @@ const createNFTWindow = (csrf) => {
 
 const setup = (csrf) => {
     const NFTButton = document.querySelector("#NFTButton");
-    const AccountButton = document.querySelector("#accountButton");
-
-    AccountButton.addEventListener("click",(e)=>{
-        e.preventDefault();
-        createAccountWindow(csrf);
-        return false;
-    });
+    const accountButton = document.querySelector("#accountButton");
 
     NFTButton.addEventListener("click",(e)=>{
         e.preventDefault();
@@ -321,7 +168,15 @@ const setup = (csrf) => {
         return false;
     });
 
+    accountButton.addEventListener("click",(e)=>{
+        e.preventDefault();
+        createAccountWindow(csrf);
+        return false;
+    });
+
     createNFTWindow(csrf); //default view
+    
+    loadNFTsFromServer();
 }
 
 const getToken = () => {
@@ -329,7 +184,6 @@ const getToken = () => {
         setup(result.csrfToken);
     })
 }
-
 $(document).ready(function() {
     getToken();
 });
